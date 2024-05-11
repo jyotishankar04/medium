@@ -82,3 +82,18 @@ userRouter.post("/signin", async (c) => {
   const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
   return c.json({ jwt });
 });
+
+userRouter.post("/deleteData", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env?.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const res2 = await prisma.post.deleteMany({});
+  const res1 = await prisma.user.deleteMany({});
+  console.log(res1);
+  console.log(res2);
+
+  return c.json({
+    res1,
+    res2,
+  });
+});

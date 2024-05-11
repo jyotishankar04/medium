@@ -106,6 +106,7 @@ bookRouter.get("blogs/blog/:id", async (c) => {
     select: {
       content: true,
       title: true,
+      postDate: true,
       author: {
         select: {
           name: true,
@@ -124,12 +125,17 @@ bookRouter.get("blog/bulk", async (c) => {
       id: true,
       content: true,
       title: true,
+      postDate: true,
       author: {
         select: {
           name: true,
         },
       },
     },
+    orderBy: {
+      postDate: "desc",
+    },
   });
+
   return c.json(post);
 });
